@@ -23,13 +23,14 @@ bot.on("raw", async packet => {
         let cmdlist = "";
         let longest = -1;
         for (let file of fs.readdirSync(getPath()).filter(file => file.endsWith(".ic"))) {
-            allFileContents.set(file, fs.readFileSync(getPath(file)));
+            let fileContents = JSON.parse(fs.readFileSync(getPath(file)));
+            if (!fileContents.command) { continue; }
+            allFileContents.set(file, fileContents);
             let compareString = botConfig.prefix + file.split(".")[0];
             if (compareString.length > longest) {longest = compareString.length;}
         }
         for (let fc of allFileContents) {
-            let fco = JSON.parse(fc[1]);
-            cmdlist += `<${(botConfig.prefix + fc[0].split(".")[0]).padEnd(longest)} ${fco.desc}>\n`
+            cmdlist += `<${(botConfig.prefix + fc[0].split(".")[0]).padEnd(longest)} ${fc[1].desc}>\n`
         }
         let channel = await bot.channels.fetch(packet.d.channel_id, true);
         if (channel && ['dm', 'text'].includes(channel.type)) {
@@ -76,7 +77,7 @@ function getCounterpartPath(filename) {
     if (filename.endsWith(".js")) {
         return getPath(filename.split(".")[0] + ".ic");
     } else if (filename.endsWith(".ic")) {
-        return getPath(filename.split(" ")[0] + ".js");
+        return getPath(filename.split(".")[0] + ".js");
     } else {
         console.warn(`getCounterpartPath called with invalid or no file extension - filename is ${filename}`);
     }

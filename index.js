@@ -4,7 +4,7 @@ const arp = require("app-root-path");
 const Discord = require("discord.js");
 
 const bot = new Discord.Client();
-var botConfig;
+let botConfig;
 
 bot.once("ready", () => {
     bot.user.setActivity(`${bot.users.cache.size} users - ${botConfig.prefix}help`, { type: 'WATCHING' });

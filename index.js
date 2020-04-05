@@ -50,8 +50,8 @@ bot.on("raw", async packet => {
                         } else if (!config.command && config.events.includes(packet.t)) {
                             rnc(getCounterpartPath(file)).execute(bot, packet);
                         }
-                    } catch {
-                        console.warn(`Error parsing ${file} to JSON, skipping`);
+                    } catch(catcherr) {
+                        console.warn(`Error parsing ${file} to JSON, skipping - ${catcherr.message}`);
                     }
                 }
             });

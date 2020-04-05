@@ -1,7 +1,7 @@
-import fs from "fs";
-import path from "path";
-import arp from "app-root-path";
-import Discord from "discord.js";
+const fs = require("fs");
+const path = require("path");
+const arp = require("app-root-path");
+const Discord = require("discord.js");
 
 const bot = new Discord.Client();
 var botConfig;

@@ -82,7 +82,7 @@ function getCounterpartPath(filename) {
     }
 }
 
-export function run(config) {
+module.exports.run = (config) => {
     if (!config.token || !config.prefix) {
         console.error("The supplied configuration is missing either the bot token or the prefix! This is a fatal error, terminating.");
         process.exit(-1);

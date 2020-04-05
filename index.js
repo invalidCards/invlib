@@ -7,7 +7,7 @@ const bot = new Discord.Client();
 var botConfig;
 
 bot.once("ready", () => {
-    bot.user.setActivity(`${but.users.cache.size} users - ${botConfig.prefix}help`, { type: 'WATCHING' });
+    bot.user.setActivity(`${bot.users.cache.size} users - ${botConfig.prefix}help`, { type: 'WATCHING' });
     console.log(`Bot ready at ${(new Date()).toUTCString()}, serving ${bot.guilds.cache.size} guilds with ${bot.channels.cache.size} channels and ${bot.users.cache.size} users.`);
 });
 

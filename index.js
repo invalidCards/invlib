@@ -17,19 +17,19 @@ bot.on("raw", async packet => {
     }
 
     if (packet.t === "MESSAGE_CREATE" && packet.d.type === 0 && packet.d.content.startsWith(botConfig.prefix + "help")) {
-        let allFileContents = [];
+        let allFileContents = new Map();
         let header = "```md\nCOMMAND LIST\n\n";
         let footer = "```";
         let cmdlist = "";
         let longest = -1;
         for (let file of fs.readdirSync(getPath()).filter(file => file.endsWith(".ic"))) {
-            allFileContents.push(fs.readFileSync(getPath(file)));
+            allFileContents.set(file, fs.readFileSync(getPath(file)));
             let compareString = botConfig.prefix + file.split(".")[0];
             if (compareString.length > longest) {longest = compareString.length;}
         }
         for (let fc of allFileContents) {
-            let fco = JSON.parse(fc);
-            cmdlist += `<${(botConfig.prefix + file.split(".")[0]).padEnd(longest)} ${fco.desc}>\n`
+            let fco = JSON.parse(fc[1]);
+            cmdlist += `<${(botConfig.prefix + fc[0].split(".")[0]).padEnd(longest)} ${fco.desc}>\n`
         }
         let channel = await bot.channels.fetch(packet.d.channel_id, true);
         if (channel && ['dm', 'text'].includes(channel.type)) {

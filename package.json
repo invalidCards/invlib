@@ -1,7 +1,7 @@
 {
-  "name": "invlib",
+  "name": "@invalidcards/invlib",
   "version": "0.0.1",
-  "description": "Discord bot library",
+  "description": "Very experimental, very very unstable Discord bot library",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

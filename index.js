@@ -22,7 +22,7 @@ bot.on("raw", async packet => {
         let footer = "```";
         let cmdlist = "";
         let longest = -1;
-        for (let file of fs.readdirSync(getPath()).filter(file => file.endsWith(".ic"))) {
+        for (let file of fs.readdirSync(getPath()).filter(file => file.endsWith(".json"))) {
             let fileContents = JSON.parse(fs.readFileSync(getPath(file)));
             if (!fileContents.command) { continue; }
             allFileContents.set(file, fileContents);
@@ -37,7 +37,7 @@ bot.on("raw", async packet => {
             channel.send(header + cmdlist + footer);
         }
     } else {
-        for (let file of fs.readdirSync(getPath()).filter(file => file.endsWith(".ic"))) {
+        for (let file of fs.readdirSync(getPath()).filter(file => file.endsWith(".json"))) {
             fs.readFile(getPath(file), (err, data) => {
                 if (err) {
                     console.error(`Internal error: ${err.message}`)
@@ -75,7 +75,7 @@ function getPath(filename) {
 
 function getCounterpartPath(filename) {
     if (filename.endsWith(".js")) {
-        return getPath(filename.split(".")[0] + ".ic");
+        return getPath(filename.split(".")[0] + ".json");
     } else if (filename.endsWith(".ic")) {
         return getPath(filename.split(".")[0] + ".js");
     } else {
@@ -91,8 +91,8 @@ module.exports.run = (config) => {
 
     for (let file of fs.readdirSync(path.join(arp.toString(), "functions"))) {
         if (file.endsWith(".js") && !fs.existsSync(getCounterpartPath(file))) {
-            console.warn(`File ${file} does not have an associated .ic (config) file, and its functionality will never run.`);
-        } else if (file.endsWith(".ic") && !fs.existsSync(getCounterpartPath(file))) {
+            console.warn(`File ${file} does not have an associated .json (config) file, and its functionality will never run.`);
+        } else if (file.endsWith(".json") && !fs.existsSync(getCounterpartPath(file))) {
             console.warn(`File ${file} is a config file without associated script.`);
         }
     }

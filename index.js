@@ -17,7 +17,7 @@ bot.on('message', (msg) => {
         let longestCmd = -1;
         let longestFeat = -1;
         for (let file of configFiles) {
-            let contents = JSON.parse(fs.readFileSync(file));
+            let contents = JSON.parse(fs.readFileSync(getPath(file)));
             
             if (contents.command) {
                 let compareString = botConfig + file;
@@ -37,7 +37,7 @@ bot.on('message', (msg) => {
         let cmdMessage = '';
         let featMessage = '';
         for (let file of configFiles) {
-            let contents = JSON.parse(fs.readFileSync(file));
+            let contents = JSON.parse(fs.readFileSync(getPath(file)));
             if (contents.command) {
                 cmdMessage += `<${(botConfig.prefix + file).padEnd(longestCmd)} ${contents.desc}>\n`;
             } else {
@@ -53,7 +53,7 @@ bot.on('message', (msg) => {
 function callModules(event, ...args) {
     let configFiles = fs.readdirSync(getPath()).filter(item => item.endsWith('.json'));
     for (let file of configFiles) {
-        let contents = JSON.parse(fs.readFileSync(file));
+        let contents = JSON.parse(fs.readFileSync(getPath(file)));
         if ((contents.command && event === 'message' && args[0].cleanContent.startsWith(botConfig.prefix)) || contents.events.includes(event)) {
             rnc(getCounterpartPath(file)).execute(event, bot, args);
         }
@@ -76,7 +76,7 @@ function getPath(filename) {
 function getCounterpartPath(filename) {
     if (filename.endsWith(".js")) {
         return getPath(filename.split(".")[0] + ".json");
-    } else if (filename.endsWith(".ic")) {
+    } else if (filename.endsWith(".json")) {
         return getPath(filename.split(".")[0] + ".js");
     } else {
         console.warn(`getCounterpartPath called with invalid or no file extension - filename is ${filename}`);
@@ -89,7 +89,7 @@ module.exports.run = (config) => {
         process.exit(-1);
     }
 
-    for (let file of fs.readdirSync(path.join(arp.toString(), "modules"))) {
+    for (let file of fs.readdirSync(getPath())) {
         if (file.endsWith(".js") && !fs.existsSync(getCounterpartPath(file))) {
             console.warn(`File ${file} does not have an associated .json (config) file, and its functionality will never run.`);
         } else if (file.endsWith(".json") && !fs.existsSync(getCounterpartPath(file))) {

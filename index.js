@@ -20,12 +20,12 @@ bot.on('message', (msg) => {
             let contents = JSON.parse(fs.readFileSync(getPath(file)));
             
             if (contents.command) {
-                let compareString = botConfig + file;
+                let compareString = botConfig + file.split('.')[0];
                 if (compareString.length > longestCmd) {
                     longestCmd = compareString.length;
                 }
             } else {
-                let compareString = file;
+                let compareString = file.split('.')[0];
                 if (compareString.length > longestFeat) {
                     longestCmd = compareString.length;
                 }
@@ -39,9 +39,9 @@ bot.on('message', (msg) => {
         for (let file of configFiles) {
             let contents = JSON.parse(fs.readFileSync(getPath(file)));
             if (contents.command) {
-                cmdMessage += `<${(botConfig.prefix + file).padEnd(longestCmd)} ${contents.desc}>\n`;
+                cmdMessage += `<${(botConfig.prefix + file.split('.')[0]).padEnd(longestCmd)} ${contents.desc}>\n`;
             } else {
-                featMessage += `<${file.padEnd(longestFeat)} ${contents.desc}>\n`;
+                featMessage += `<${file.split('.')[0].padEnd(longestFeat)} ${contents.desc}>\n`;
             }
         }
         msg.channel.send(header + cmdMessage + midder + featMessage + footer);

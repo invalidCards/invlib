@@ -27,7 +27,7 @@ bot.on('message', (msg) => {
             } else {
                 let compareString = file.split('.')[0];
                 if (compareString.length > longestFeat) {
-                    longestCmd = compareString.length;
+                    longestFeat = compareString.length;
                 }
             }
         }

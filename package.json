@@ -1,6 +1,6 @@
 {
   "name": "@invalidcards/invlib",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Very experimental, very very unstable Discord bot library",
   "main": "index.js",
   "scripts": {

@@ -12,7 +12,7 @@ bot.once("ready", () => {
 });
 
 bot.on('message', (msg) => {
-    if (msg.cleanContent.startsWith(botConfig.prefix) && msg.cleanContent.replace(botConfig.prefix).split(' ')[0] === 'help') {
+    if (msg.cleanContent.startsWith(botConfig.prefix) && msg.cleanContent.replace(botConfig.prefix, '').split(' ')[0] === 'help') {
         let configFiles = fs.readdirSync(getPath()).filter(item => item.endsWith('.json'));
         let longestCmd = -1;
         let longestFeat = -1;

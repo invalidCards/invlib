@@ -98,7 +98,7 @@ function callModules(event, ...args) {
     for (let file of configFiles) {
         let contents = JSON.parse(fs.readFileSync(getPath(file)));
         if ((contents.command && event === 'message' && args[0].cleanContent.startsWith(botConfig.prefix) && args[0].cleanContent.replace(botConfig.prefix, '').split(' ')[0] === file.split('.')[0]) 
-            || contents.events.includes(event)) {
+            || (contents.events && contents.events.includes(event))) {
             rnc(getCounterpartPath(file)).execute(event, bot, args);
         }
     }
